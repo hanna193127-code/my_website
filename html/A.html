@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code 生成器</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .qr-container {
+            background-color: #ffe6f2;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        .qr-container h2 {
+            color: #ff3399;
+            margin-bottom: 20px;
+        }
+        .qr-container input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 2px solid #ff3399;
+            border-radius: 5px;
+        }
+        .generate-btn {
+            background-color: #ff3399;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .generate-btn:hover {
+            background-color: #ff66b2;
+        }
+        .qr-code {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container">
+        <h2>QR Code 生成器</h2>
+        <input type="text" id="qr-text" placeholder="輸入網址或文字" />
+        <br>
+        <button class="generate-btn" onclick="generateQRCode()">生成 QR Code</button>
+        <div id="qr-code" class="qr-code"></div>
+    </div>
+
+    <script>
+        function generateQRCode() {
+            const text = document.getElementById('qr-text').value;
+            if (!text) {
+                alert('請輸入有效的網址或文字');
+                return;
+            }
+
+            const qrCodeContainer = document.getElementById('qr-code');
+            qrCodeContainer.innerHTML = '';  // 清除之前的QR Code
+
+            // 生成QR Code
+            QRCode.toCanvas(qrCodeContainer, text, { width: 200, height: 200 }, function (error) {
+                if (error) console.error(error);
+                console.log('QR Code已生成!');
+            });
+        }
+    </script>
+</body>
+</html>

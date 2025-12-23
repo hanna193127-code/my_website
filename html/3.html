@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粉色日曆</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #ffe6f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calendar {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .month-year {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff5fa2;
+        }
+        button {
+            background: #ff94c6;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+        button:hover {
+            background: #ff5fa2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        th {
+            color: #ff5fa2;
+            padding-bottom: 10px;
+        }
+        td {
+            padding: 10px;
+            border-radius: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        td:hover {
+            background: #ffe0ef;
+        }
+        .today {
+            background: #ffb3d9 !important;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar">
+        <div class="calendar-header">
+            <button onclick="changeMonth(-1)">←</button>
+            <div class="month-year" id="monthYear"></div>
+            <button onclick="changeMonth(1)">→</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>日</th>
+                    <th>一</th>
+                    <th>二</th>
+                    <th>三</th>
+                    <th>四</th>
+                    <th>五</th>
+                    <th>六</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        function renderCalendar() {
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            const monthYear = document.getElementById("monthYear");
+            const calendarBody = document.getElementById("calendarBody");
+
+            const months = ["1 月","2 月","3 月","4 月","5 月","6 月","7 月","8 月","9 月","10 月","11 月","12 月"];
+            monthYear.textContent = `${currentYear} 年 ${months[currentMonth]}`;
+
+            calendarBody.innerHTML = "";
+            let date = 1;
+
+            for (let i = 0; i < 6; i++) {
+                let row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    let cell = document.createElement("td");
+
+                    if (i === 0 && j < firstDay) {
+                        cell.textContent = "";
+                    } else if (date > daysInMonth) {
+                        cell.textContent = "";
+                    } else {
+                        cell.textContent = date;
+
+                        let thisDate = new Date(currentYear, currentMonth, date);
+
+                        if (thisDate.toDateString() === today.toDateString()) {
+                            cell.classList.add("today");
+                        }
+
+                        date++;
+                    }
+                    row.appendChild(cell);
+                }
+                calendarBody.appendChild(row);
+            }
+        }
+
+        function changeMonth(step) {
+            currentMonth += step;
+
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+
+            renderCalendar();
+        }
+
+        renderCalendar();
+    </script>
+</body>
+</html>
