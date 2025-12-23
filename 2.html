@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界時鐘</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .clock-container {
+            background-color: #ffe6f2;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 300px;
+        }
+        .clock-container h2 {
+            margin-bottom: 20px;
+            color: #ff3399;
+        }
+        .city {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3a78d1;
+        }
+        .time {
+            font-size: 36px;
+            color: #ff3399;
+            margin-top: 10px;
+        }
+        .timezone {
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <h2>世界時鐘</h2>
+        <div id="clock1">
+            <div class="city">台北</div>
+            <div class="timezone">(UTC+8)</div>
+            <div class="time" id="time1">--:--:--</div>
+        </div>
+        <div id="clock2" style="margin-top: 30px;">
+            <div class="city">紐約</div>
+            <div class="timezone">(UTC-5)</div>
+            <div class="time" id="time2">--:--:--</div>
+        </div>
+        <div id="clock3" style="margin-top: 30px;">
+            <div class="city">倫敦</div>
+            <div class="timezone">(UTC+0)</div>
+            <div class="time" id="time3">--:--:--</div>
+        </div>
+        <div id="clock4" style="margin-top: 30px;">
+            <div class="city">東京</div>
+            <div class="timezone">(UTC+9)</div>
+            <div class="time" id="time4">--:--:--</div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            // 台北 (UTC+8)
+            const taipeiTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Taipei' }));
+            document.getElementById('time1').textContent = taipeiTime.toLocaleTimeString();
+
+            // 紐約 (UTC-5)
+            const newYorkTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+            document.getElementById('time2').textContent = newYorkTime.toLocaleTimeString();
+
+            // 倫敦 (UTC+0)
+            const londonTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+            document.getElementById('time3').textContent = londonTime.toLocaleTimeString();
+
+            // 東京 (UTC+9)
+            const tokyoTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+            document.getElementById('time4').textContent = tokyoTime.toLocaleTimeString();
+        }
+
+        setInterval(updateClock, 1000); // 每秒更新
+        updateClock(); // 頁面載入時先顯示時間
+    </script>
+</body>
+</html>

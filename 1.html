@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隨機數字生成器</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffe6f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .random-container {
+            background-color: #ffc0dd;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .random-container h2 {
+            margin-bottom: 20px;
+            color: #ff3399;
+        }
+        .random-number {
+            font-size: 48px;
+            color: #ff3399;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .input-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff3399;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .generate-btn {
+            background-color: #ff3399;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .generate-btn:hover {
+            background-color: #ff66b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="random-container">
+        <h2>隨機數字生成器</h2>
+        <div class="input-container">
+            <input type="number" id="min-value" placeholder="最小值" />
+            <input type="number" id="max-value" placeholder="最大值" />
+        </div>
+        <div>
+            <button class="generate-btn" onclick="generateRandomNumber()">生成隨機數字</button>
+        </div>
+        <div class="random-number" id="random-number">--</div>
+    </div>
+
+    <script>
+        function generateRandomNumber() {
+            const min = parseInt(document.getElementById('min-value').value);
+            const max = parseInt(document.getElementById('max-value').value);
+
+            if (isNaN(min) || isNaN(max)) {
+                alert('請輸入有效的數字');
+                return;
+            }
+
+            if (min >= max) {
+                alert('最小值應小於最大值');
+                return;
+            }
+
+            const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+            document.getElementById('random-number').textContent = randomNum;
+        }
+    </script>
+</body>
+</html>
